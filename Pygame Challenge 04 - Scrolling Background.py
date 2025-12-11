@@ -65,35 +65,39 @@
 import pygame
 pygame.init()
 
-# *********SETUP**********
-
+# ---------- SETUP ----------
 windowWidth = 500
 windowHeight = 500
 window = pygame.display.set_mode((windowWidth, windowHeight))
-clock = pygame.time.Clock()  #will allow us to set framerate
+clock = pygame.time.Clock()
 
-# *********GAME LOOP**********
-while True:
-    # *********EVENTS**********
-    ev = pygame.event.poll()    # Look for any event
-    if ev.type == pygame.QUIT:  # windowow close button clicked?
-        break                   #   ... leave game loop
-   
-    #PUT YOUR MOUSE/KEYBOARD EVENTS HERE
-   
-    # *********GAME LOGIC**********
-    
-    #PUT YOUR GAME LOGIN HERE FOR EACH GAMESTATE
-    
-    # *********DRAW THE FRAME**********
+# ---------- LOAD IMAGE ----------
+bg_image = pygame.image.load("Forest.png")
+bg_image = pygame.transform.scale(bg_image, (windowWidth, windowHeight))
 
-    #PUT YOUR DRAWING, IMAGE PLACEMENT, BLIT ETC.. COMMANDS HERE FOR EACH GAMESTATE'''
+# ---------- VARIABLES ----------
+x = 0          # current x position of image
+scroll_speed = 2  # speed of scrolling
 
-    # *********SHOW THE FRAME TO THE USER**********
+# ---------- GAME LOOP ----------
+running = True
+while running:
+    # ---- EVENTS ----
+    for ev in pygame.event.get():
+        if ev.type == pygame.QUIT:
+            running = False
+
+    # ---- UPDATE ----
+    x = x - scroll_speed
+    if x <= -windowWidth:  # reset when image fully off-screen
+        x = 0
+
+    # ---- DRAW ----
+    window.blit(bg_image, (x, 0))
+    window.blit(bg_image, (x + windowWidth, 0))  # draw second copy for seamless scroll
+
+    # ---- SHOW FRAME ----
     pygame.display.flip()
-    clock.tick(60) #Force frame rate to 60fps or lower
-
+    clock.tick(60)
 
 pygame.quit()
-
-

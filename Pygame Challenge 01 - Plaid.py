@@ -63,37 +63,38 @@
 # Good luck!
 #-----------------------------------------------------------------------------
 import pygame
+import random
 pygame.init()
 
-# *********SETUP**********
+window = pygame.display.set_mode((500, 500))
+clock = pygame.time.Clock()
 
-windowWidth = 500
-windowHeight = 500
-window = pygame.display.set_mode((windowWidth, windowHeight))
-clock = pygame.time.Clock()  #will allow us to set framerate
+# ----- choose only TWO random colours at start -----
+color1 = (random.randint(0,255), random.randint(0,255), random.randint(0,255), 120)
+color2 = (random.randint(0,255), random.randint(0,255), random.randint(0,255), 120)
+# ---------------------------------------------------
 
-# *********GAME LOOP**********
-while True:
-    # *********EVENTS**********
-    ev = pygame.event.poll()    # Look for any event
-    if ev.type == pygame.QUIT:  # windowow close button clicked?
-        break                   #   ... leave game loop
-   
-    #PUT YOUR MOUSE/KEYBOARD EVENTS HERE
-   
-    # *********GAME LOGIC**********
-    
-    #PUT YOUR GAME LOGIN HERE FOR EACH GAMESTATE
-    
-    # *********DRAW THE FRAME**********
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-    #PUT YOUR DRAWING, IMAGE PLACEMENT, BLIT ETC.. COMMANDS HERE FOR EACH GAMESTATE'''
+    window.fill((255, 255, 255))
 
-    # *********SHOW THE FRAME TO THE USER**********
+    # surface for alpha
+    s = pygame.Surface((500, 500), pygame.SRCALPHA)
+
+    # horizontal lines (thick)
+    for y in range(0, 500, 50):
+        pygame.draw.line(s, color1, (0, y), (500, y), 12)
+
+    # vertical lines (thin)
+    for x in range(0, 500, 50):
+        pygame.draw.line(s, color2, (x, 0), (x, 500), 4)
+
+    window.blit(s, (0, 0))
     pygame.display.flip()
-    clock.tick(60) #Force frame rate to 60fps or lower
-
+    clock.tick(60)
 
 pygame.quit()
-
-

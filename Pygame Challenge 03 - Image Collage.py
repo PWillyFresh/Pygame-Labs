@@ -32,34 +32,42 @@
 import pygame
 pygame.init()
 
-# *********SETUP**********
+window = pygame.display.set_mode((600, 500))
+clock = pygame.time.Clock()
 
-windowWidth = 500
-windowHeight = 500
-window = pygame.display.set_mode((windowWidth, windowHeight))
-clock = pygame.time.Clock()  #will allow us to set framerate
+# ------- LOAD IMAGES -------
+alien = pygame.transform.scale(pygame.image.load("Agartha.jpg"), (600,700))
+can = pygame.transform.scale(pygame.image.load("Can.jpg"), (600,700))
+mountain = pygame.transform.scale(pygame.image.load("Mountains.jpeg"), (600,700))
 
-# *********GAME LOOP**********
-while True:
-    # *********EVENTS**********
-    ev = pygame.event.poll()    # Look for any event
-    if ev.type == pygame.QUIT:  # windowow close button clicked?
-        break                   #   ... leave game loop
-   
-    #PUT YOUR MOUSE/KEYBOARD EVENTS HERE
-   
-    # *********GAME LOGIC**********
-    
-    #PUT YOUR GAME LOGIN HERE FOR EACH GAMESTATE
-    
-    # *********DRAW THE FRAME**********
+# ------- SCALE IMAGES -------
+alien = pygame.transform.scale(alien, (250, 350))
+can = pygame.transform.scale(can, (120, 250))
+mountain = pygame.transform.scale(mountain, (600, 500))
 
-    #PUT YOUR DRAWING, IMAGE PLACEMENT, BLIT ETC.. COMMANDS HERE FOR EACH GAMESTATE'''
+# animation variable
+can_x = 50
+speed = 2
 
-    # *********SHOW THE FRAME TO THE USER**********
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # ---- BACKGROUND ----
+    window.blit(mountain, (0, 0))
+
+    # ---- MAIN IMAGE (alien offering can) ----
+    window.blit(alien, (300, 80))
+
+    # ---- ANIMATED CAN ----
+    window.blit(can, (can_x, 180))
+    can_x += speed
+    if can_x > 450 or can_x < 50:
+        speed *= -1  # bounce left/right
+
     pygame.display.flip()
-    clock.tick(60) #Force frame rate to 60fps or lower
-
+    clock.tick(60)
 
 pygame.quit()
-

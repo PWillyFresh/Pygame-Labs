@@ -74,37 +74,53 @@
 # Good luck!
 #-----------------------------------------------------------------------------
 import pygame
+import random
 pygame.init()
 
-# *********SETUP**********
-
+# ---------- SETUP ----------
 windowWidth = 500
 windowHeight = 500
 window = pygame.display.set_mode((windowWidth, windowHeight))
-clock = pygame.time.Clock()  #will allow us to set framerate
+clock = pygame.time.Clock()
 
-# *********GAME LOOP**********
-while True:
-    # *********EVENTS**********
-    ev = pygame.event.poll()    # Look for any event
-    if ev.type == pygame.QUIT:  # windowow close button clicked?
-        break                   #   ... leave game loop
-   
-    #PUT YOUR MOUSE/KEYBOARD EVENTS HERE
-   
-    # *********GAME LOGIC**********
-    
-    #PUT YOUR GAME LOGIN HERE FOR EACH GAMESTATE
-    
-    # *********DRAW THE FRAME**********
+# ---------- FONTS ----------
+font1 = pygame.font.Font("fifties_movies.zip", 50)
+font2 = pygame.font.Font("fifties_movies.zip", 50)
+font3 = pygame.font.Font("fifties_movies.zip", 50)
 
-    #PUT YOUR DRAWING, IMAGE PLACEMENT, BLIT ETC.. COMMANDS HERE FOR EACH GAMESTATE'''
+fonts = [font1, font2, font3]
 
-    # *********SHOW THE FRAME TO THE USER**********
+# ---------- MESSAGE ----------
+words = ["JUST", "GIVE", "ME", "A", "DOLLAR"]
+
+# ---------- POSITIONS (fixed so it isn't buggy) ----------
+positions = [(30, 80), (200, 80), (30, 180), (200, 180), (120, 280)]
+
+# ---------- RANDOM COLORS (only once when you start) ----------
+colors = []
+for i in range(len(words)):
+    r = random.randint(0, 255)
+    g = random.randint(0, 255)
+    b = random.randint(0, 255)
+    colors.append((r, g, b))
+
+# ---------- GAME LOOP ----------
+running = True
+while running:
+    for ev in pygame.event.get():
+        if ev.type == pygame.QUIT:
+            running = False
+
+    window.fill((255, 255, 255))
+
+    # draw each word once in a random color + random font
+    for i, word in enumerate(words):
+        font = random.choice(fonts)
+        color = colors[i]
+        text = font.render(word, True, color)
+        window.blit(text, positions[i])
+
     pygame.display.flip()
-    clock.tick(60) #Force frame rate to 60fps or lower
-
+    clock.tick(60)
 
 pygame.quit()
-
-
