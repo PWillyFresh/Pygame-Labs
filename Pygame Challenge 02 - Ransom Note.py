@@ -84,9 +84,9 @@ window = pygame.display.set_mode((windowWidth, windowHeight))
 clock = pygame.time.Clock()
 
 # ---------- FONTS ----------
-font1 = pygame.font.Font("fifties_movies.zip", 50)
-font2 = pygame.font.Font("fifties_movies.zip", 50)
-font3 = pygame.font.Font("fifties_movies.zip", 50)
+font1 = pygame.font.Font("Font1.otf", 50)
+font2 = pygame.font.Font("Font2.otf", 50)
+font3 = pygame.font.Font("Font3.otf", 50)
 
 fonts = [font1, font2, font3]
 
@@ -104,6 +104,12 @@ for i in range(len(words)):
     b = random.randint(0, 255)
     colors.append((r, g, b))
 
+    # ---------- RANDOM FONTS (only once when you start) ----------
+chosen_fonts = []
+for i in range(len(words)):
+    chosen_fonts.append(random.choice(fonts))
+
+
 # ---------- GAME LOOP ----------
 running = True
 while running:
@@ -115,7 +121,7 @@ while running:
 
     # draw each word once in a random color + random font
     for i, word in enumerate(words):
-        font = random.choice(fonts)
+        font = chosen_fonts[i]
         color = colors[i]
         text = font.render(word, True, color)
         window.blit(text, positions[i])

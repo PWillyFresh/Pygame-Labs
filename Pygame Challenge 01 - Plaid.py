@@ -93,6 +93,7 @@ while running:
     for x in range(0, 500, 50):
         pygame.draw.line(s, color2, (x, 0), (x, 500), 4)
 
+    #display
     window.blit(s, (0, 0))
     pygame.display.flip()
     clock.tick(60)
